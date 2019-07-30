@@ -222,7 +222,7 @@ app.get("/signup",function(req,res){
 });
 app.post("/signup",function(req,res){
 	var newuser = new user({username:req.body.username,email:req.body.email});
-	if (req.body.secretcode==="beagle8297"){
+	if (req.body.secretcode===process.env.ADMINCODE){
 		newuser.isAdmin = true;
 	}
 	user.register(newuser,req.body.password,function(err,user){
