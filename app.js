@@ -225,6 +225,7 @@ app.post("/signup",function(req,res){
 	if (req.body.secretcode===process.env.ADMINCODE){
 		newuser.isAdmin = true;
 	}
+	
 	user.register(newuser,req.body.password,function(err,user){
 		if (err){
 			req.flash("error",err.message);
