@@ -1,0 +1,17 @@
+<% include partials/header.ejs %>
+<link type="text/css" rel="stylesheet" href="/sign.css">
+</head>
+<body>
+	<form action="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>?_method=PUT" method="POST">
+		<div class="container sign">
+			<div class="row justify-content-center">
+				<div class="col-10 col-md-5">
+					<div class="form-group">
+						<input type="text" class="form-control" name="text" value="<%=comment.text%>">
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</div>
+	</form>
+<%include partials/footer.ejs %>

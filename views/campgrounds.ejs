@@ -1,0 +1,92 @@
+<% include partials/header.ejs %>
+<link type="text/css" rel="stylesheet" href="/campground.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<style>
+	.co {
+		color:black;
+	}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+  <a class="navbar-brand" href="/">Yelp camp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+	  </ul>
+	<ul class="navbar-nav ml-auto">
+		<li class="nav-item">
+		<form action="/campgrounds" method="GET" class="form-inline">
+			<div class="form-group">
+				<input class="form-control ml-5 py-1" type="text" placeholder="search" name="search">
+				<button type="submit" class="btn btn-primary btn-sm ml-2">Search
+			</div>
+
+				
+			</button>
+		</form>
+		</li>
+	 </ul>
+
+	  <ul class="navbar-nav ml-auto">
+		  <% if (state){%>
+		  		<li class="nav-item"><a class="nav-link" href="#">Signed In As <%=state.username%></a></li>
+				<li class="nav-item"><a class="nav-link" href="/signout"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li> 
+		  <%} else{ %>
+			  <li class="nav-item"><a class="nav-link" href="/signin"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+		  	  <li class="nav-item"><a class="nav-link" href="/signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+		  <% } %>
+	  </ul>
+		</div>
+		</div>
+	</nav>
+	<div class="container">
+			<%if (error && error.length>0){%>
+	<div class="alert alert-danger mt-1" role="alert"><%=error%></div>
+	<%}%>
+	<%if (success && success.length>0){%>
+	<div class="alert alert-success mt-1" role="alert"><%=success%></div>
+	<%}%>
+	</div>
+
+<div class="jumbotron text-center">
+	<h1 class="display-1">
+		<i class="fas fa-campground display-3"></i>Welcome to YelpCamp!
+	</h1>
+	<p>
+		View our hand picked campgrounds from all over the country!
+	</p>
+	<a href="/campgrounds/new" class="btn btn-primary">Add new Campground</a>
+</div>
+	<div class="container">
+		<div class="row">
+			<% campgrounds.forEach(function(camp){ %>
+			<div class="col-12 col-md-6 col-lg-4">
+				<div class="card mt-5">
+  					<img class="card-img-top img-fluid" src="<%=camp.image %>" alt="Card image cap">
+  					<div class="card-body">
+    					<h5 class="card-title"><%= camp.name %></h5>
+    					<p class="card-text"><%= camp.description.substring(0,60) %></p>
+    					<a href="/campgrounds/<%= camp._id %>" class="btn btn-primary">More</a>
+  					</div>
+				</div>
+			</div>
+	<% }) %>
+		</div>
+		
+	</div>
+
+
+
+
+<% include partials/footer.ejs %>

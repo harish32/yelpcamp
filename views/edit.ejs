@@ -1,0 +1,45 @@
+<% include partials/header.ejs %>
+<link type="text/css" rel="stylesheet" href="/sign.css">
+</head>
+<body>
+	<form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+	<div class="container sign">
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Name</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%=campground.name%>" name="name">
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputPassword1">Image</label>
+				<input type="file"  accept="image/*" id="exampleInputPassword1" name="image">
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputPassword1">Description</label>
+				<textarea rows=5 class="form-control" id="exampleInputPassword1" placeholder="About" name="description"><%=campground.description%></textarea>
+			</div>
+		</div>
+	</div>
+		<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputPassword1">Location</label>
+				<input type="text" class="form-control" id="exampleInputPassword1" value="<%=campground.location%>" name="location">
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<button type="submit" class="btn btn-primary">Submit</button>
+		<a class="btn btn-primary ml-2" href="/campgrounds">Back</a>
+	</div>
+	</div>
+</form>
+<%include partials/footer.ejs %>

@@ -1,0 +1,54 @@
+<% include partials/header.ejs %>
+<link type="text/css" rel="stylesheet" href="/sign.css">
+</head>
+<body>
+		<div class="container">
+			<%if (error && error.length>0){%>
+	<div class="alert alert-danger mt-1" role="alert"><%=error%></div>
+	<%}%>
+	<%if (success && success.length>0){%>
+	<div class="alert alert-success mt-1" role="alert"><%=success%></div>
+	<%}%>
+	</div>
+	<form action="/signup" method="POST">
+	<div class="container sign">
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" name="username" id="username" placeholder="username" required>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="exampleInputPassword1">Password</label>
+				<input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required required>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-10 col-md-5">
+			<div class="form-group">
+				<label for="username">Admin code</label>
+				<input type="text" class="form-control" name="secretcode" id="username" placeholder="you dont need to fill this">
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<button type="submit" class="btn btn-primary">Submit</button>
+		<a class="btn btn-primary ml-2" href="/campgrounds">Back</a>
+	</div>
+	</div>
+</form>
+<%include partials/footer.ejs %>

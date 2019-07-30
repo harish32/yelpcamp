@@ -1,0 +1,118 @@
+<% include partials/header.ejs %>
+<style>
+	html body {
+		height:100%;
+		width:100%;
+	}
+	.form-control {
+		width:300px;
+	}
+	#ref {
+		display:inline;
+	}
+	#fre {
+		display:inline;
+	}
+	#map { position:absolute; top:250px; bottom:0; right:10px; width:90%; height:40% }
+	.ser {
+		display:inline
+	}
+
+
+</style>
+</head>
+</body>
+	<div class="container">
+			<%if (error && error.length>0){%>
+	<div class="alert alert-danger mt-1" role="alert"><%=error%></div>
+	<%}%>
+	<%if (success && success.length>0){%>
+	<div class="alert alert-success mt-1" role="alert"><%=success%></div>
+	<%}%>
+	</div>
+<div class="container mt-4">
+	 <div class="row">
+		<div class="col-3 mt-5">
+			<div class="list-group">
+  				<button type="button" class="list-group-item list-group-item-action active">info 1</button>
+  				<button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+  				<button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+  				<button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+			</div>
+			<div id='map'></div>
+		</div>
+		<div class="col-9">
+			<img class="img-fluid" src="<%= campground.image %>">
+				<div class="d-flex justify-content-between">
+					<div class="p-2"><h4><a href="/"><%=campground.name%></a></h4></div>
+					<div class="p-2">
+						<h4 class="d-inline">$9.99</h4>
+					</div>
+				</div>
+			<p><%=campground.description %> </p>
+			<p><em>submitted by <%=campground.author.username%> <%=moment(campground.created).fromNow()%></em></p>
+			<%var space = false %>
+				<% if (state){%>
+				<%space = true %>
+			<% if (state.username===campground.author.username || state.isAdmin){ %>
+			<a class="btn btn-sm btn-warning mb-2" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+			<form id="ref" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+				<button type="submit" class="btn btn-sm btn-danger ml-2 mb-2">Delete</button>	
+			</form>	
+			<%}%>
+			<%}%>
+			<div class="card card-body bg-light le">
+				<div class="text-right">
+					<form action="/campgrounds/<%= campground._id %>/" method="POST">
+						<div class="row mt-2 ml-2">
+							<input type="text" class="form-control" name="comment"  placeholder="Add comment">
+							<button type="submit" class="btn btn-primary d-inline px-3 ml-2">Add</button>
+						</div>
+					</form>
+					<% campground.comments.slice().reverse().forEach(function(comment){ %>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-between">
+								<div class="p-2">
+									<%=comment.text%>
+									<%if (state) {%>
+									<% if (comment.author.id.equals(state._id) || state.isAdmin){%>
+									<div>
+										<a href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>">Edit</a>
+										<form id="<%=comment._id%>" class="ser" action="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+											<a href="#" onclick="document.getElementById('<%=comment._id%>').submit()" class="ml-2">Delete</a>							
+										<!-- <button class="btn btn-xs special" type="submit">Delete</button> -->
+										</form>
+									</div>	
+									<%}%>
+									<%}%>
+								</div>
+								<div class="p-2">
+									<div>
+										<i class="fas fa-user"></i> <%=comment.author.username%>
+									</div>
+									<%= moment(comment.created).fromNow() %>
+								</div>
+							</div>
+							<%})%>	
+						</div>	
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGFyaXNoMTIxMyIsImEiOiJjanltMDJzZDAwM3FnM25tb2RpYXpwbzFjIn0.LPTK80kHmcW0JcajJ6EGlw';
+var map = new mapboxgl.Map({
+container: 'map', // container id
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [<%=campground.long%>, <%=campground.lat%>], // starting position
+zoom: 9 // starting zoom
+});
+ 
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+</script>
+
+<%include partials/footer.ejs %>
